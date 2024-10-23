@@ -1,0 +1,17 @@
+{
+  "name": "musicafrica",
+  "version": "1.0.0",
+  "description": "This is a web-based Music Player with a focus on Afro tunes , It's part of my final year ALX project and acts as the capstone project concluding my back-end specialization",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "mongoose": "^8.7.2"
+  }
+}
