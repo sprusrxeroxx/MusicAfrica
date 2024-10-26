@@ -1,7 +1,7 @@
 // Controller containing the methods for each route in routes
 
 import mongoose from "mongoose";
-import Song from "../models/song.model";
+import Song from "../models/song.model.js";
 
 export const getSongs = async (req, res) => {
     try {
@@ -31,7 +31,7 @@ export const createSong = async (req, res) => {
     }
 };
 
-export const updatedSong = async (req, res) => {
+export const updateSong = async (req, res) => {
     const { id } = req.params;
 
     const song = req.body;

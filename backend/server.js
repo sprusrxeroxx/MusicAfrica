@@ -10,7 +10,6 @@ dotenv.config();
 const app = express();
 
 app.use(express.json()); // Middleware : allows us to accept JSON data in the request body
-
 app.use("/api/songs", songRoutes); // Links request calls to endpoints
 
 app.listen(5000, () => {
