@@ -27,6 +27,18 @@ app.post("/api/songs", async (req, res) => {
     }
 });
 
+app.delete("/api/songs/:id", async (req, res) => {
+    const { id } = req.params;
+    console.log("id:", id);
+
+    try {
+        await Song.findByIdAndDelete(id);
+        res.status(200).json({ success: true, message: "Song Deleted" });
+    } catch (error) {
+        res.status(404).json({ success: false, message: "Song Not Found" });
+    }
+});
+
 app.listen(5000, () => {
     connectDB();
     console.log("Server started at http://localhost:5000");
