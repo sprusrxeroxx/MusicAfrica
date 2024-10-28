@@ -1,7 +1,9 @@
-import { Button, Container, Flex, HStack, Link, Text } from '@chakra-ui/react';
-import { PlusSquareIcon } from "@chakra-ui/icons";
+import { Button, Container, Flex, HStack, Link, Text, useColorMode } from '@chakra-ui/react';
+import { PlusSquareIcon, SunIcon,  MoonIcon } from "@chakra-ui/icons";
 
 const Navbar = () => {
+    const { colorMode, toggleColorMode } = useColorMode();
+
     return <Container maxW={"1140px"} px={4}>
         <Flex
             h={16}
@@ -30,7 +32,9 @@ const Navbar = () => {
                         <PlusSquareIcon fontSize={20}/>
                     </Button>
                 </Link>
-
+                <Button onClick={toggleColorMode}>
+                    {colorMode === "light" ?  <SunIcon /> : <MoonIcon />}
+                </Button>
             </HStack>
             
 
