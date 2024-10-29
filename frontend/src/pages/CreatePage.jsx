@@ -32,6 +32,7 @@ const CreatePage = () => {
                 isClosable: true,
             });
         }
+    setNewSong({ title:"", artist:"", image:"", audioUrl:"", lyrics:"" });
     };
 
     return (
