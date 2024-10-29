@@ -8,6 +8,8 @@ const CreatePage = () => {
         artist:"",
         image:"",
         audioUrl:"",
+        duration:"",
+        lyrics:"",
     });
 
     const {createSong}=useSongStore();
@@ -35,7 +37,7 @@ const CreatePage = () => {
                         <Input
                             placeholder='Song Title'
                             name='title'
-                            value={newSong.name}
+                            value={newSong.title}
                             onChange={(e) => setNewSong({ ...newSong, title: e.target.value })}
                         />
 
@@ -58,6 +60,12 @@ const CreatePage = () => {
                             name='audioUrl'
                             value={newSong.audioUrl}
                             onChange={(e) => setNewSong({ ...newSong, audioUrl: e.target.value })}
+                        />
+                            <Input
+                            placeholder='Lyrics'
+                            name='lyrics'
+                            value={newSong.lyrics}
+                            onChange={(e) => setNewSong({ ...newSong, lyrics: e.target.value })}
                         />
 
                         <Button colorScheme='blue' onClick={handleAddSong} w="full">

@@ -19,7 +19,7 @@ const songSchema = new mongoose.Schema({ // Schema to dictate the structure of s
         },
         duration:{
             type: Number,
-            required: true
+            required: false
         },
     },  
     {

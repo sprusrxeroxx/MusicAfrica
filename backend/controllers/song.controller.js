@@ -16,7 +16,7 @@ export const getSongs = async (req, res) => {
 export const createSong = async (req, res) => {
     const song = req.body; // user will request data to http body 
 
-    if(!song.title || !song.artist || !song.audioUrl || !song.lyrics || !song.duration) {
+    if(!song.title || !song.artist || !song.audioUrl || !song.lyrics) {
         return res.status(400).json({ success:false, message: "Please provide all fields!" });
     }
 
