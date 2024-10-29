@@ -1,4 +1,4 @@
-import { Box, Button, Heading, Input, useColorModeValue, VStack, Container } from '@chakra-ui/react';
+import { Box, Button, Heading, Input, useColorModeValue, VStack, Container, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useSongStore } from '../store/song';
 
@@ -12,12 +12,26 @@ const CreatePage = () => {
         lyrics:"",
     });
 
+    const toast = useToast();
     const {createSong}=useSongStore();
 
     const handleAddSong = async() => {
         const {success, message} = await createSong(newSong);
-        console.log("Success:", success);
-        console.log("Message:", message);
+        if (!success) {
+            toast({
+                title:"Error",
+                description: message,
+                status: "error",
+                isClosable: true,
+            });
+        } else {
+            toast({
+                title:"Success",
+                description: message,
+                status: "success",
+                isClosable: true,
+            });
+        }
     };
 
     return (
