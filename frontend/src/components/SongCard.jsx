@@ -1,13 +1,35 @@
-import { Box, Heading, HStack, IconButton, Image, Text, useColorModeValue, useToast } from "@chakra-ui/react";
+import { Box, 
+        Button, 
+        Heading, 
+        HStack, 
+        IconButton, 
+        Image, Input, Modal, 
+        ModalBody, 
+        ModalCloseButton, 
+        ModalContent, 
+        ModalFooter, 
+        ModalHeader, 
+        ModalOverlay, 
+        Text, 
+        useColorModeValue, 
+        useDisclosure, 
+        useToast, 
+        VStack
+    } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useSongStore } from "../store/song";
+import { useState } from "react";
 
-const SongCard = ({song}) => {
+const SongCard = ({ song }) => {
+    const [updatedSong, setUpdatedSong] = useState(song);
+
+
     const textColor = useColorModeValue("gray.600", "gray.200");
     const bg=useColorModeValue("white", "gray.800");
 
-    const { deleteSong }=useSongStore();
+    const { deleteSong, updateSong }=useSongStore();
     const toast = useToast();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const handleDeleteSong = async (pid) => {
         const { success,message } = await deleteSong(pid);
@@ -29,7 +51,27 @@ const SongCard = ({song}) => {
         });
     }
 };
-    
+    const handleUpdateSong = async (pid, updatedSong) => {
+        const { success, message }= await updateSong(pid, updatedSong);
+        onClose();
+        if(!success){
+            toast({
+                title:'Error',
+                description: message,
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+            });
+        } else {
+            toast({
+                title:'Success',
+                description: message,
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+        });
+    }
+    }
     return (
         <Box
             shadow="lg"
@@ -50,10 +92,51 @@ const SongCard = ({song}) => {
                 </Text>
 
                 <HStack spacing={2}>
-                    <IconButton icon={<EditIcon />}  colorScheme="blue" />
+                    <IconButton icon={<EditIcon />}  onClick={onOpen}
+                    colorScheme="blue" />
                     <IconButton icon={<DeleteIcon />} onClick={() => handleDeleteSong(song._id)} colorScheme='red' />
                 </HStack>
             </Box>
+
+            <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+
+                <ModalContent>
+                    <ModalHeader>Update Song</ModalHeader>
+                    <ModalCloseButton></ModalCloseButton>
+                    <ModalBody>
+                        <VStack spacing={4}>
+                            <Input
+                                placeholder='Song Title' name='title' value={updatedSong.title}
+                                onChange={(e) => setUpdatedSong({ ...updateSong, title:e.target.value })}
+                            />
+
+                            <Input
+                                placeholder='Image Url' name='image' value={updatedSong.image}
+                                onChange={(e) => setUpdatedSong({ ...updateSong, image:e.target.value })}
+                            />
+
+                            <Input
+                            placeholder='Lyrics' name='lyrics' value={updatedSong.lyrics}
+                            onChange={(e) => setUpdatedSong({ ...updateSong, lyrics:e.target.value })}
+                            />
+
+                        </VStack>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button colorScheme='blue' mr={3}
+                            onClick={() => handleUpdateSong(song._id, updatedSong)}
+                        >
+                            Update
+                        </Button>
+                        <Button variable='ghost' onClick={onClose}>
+                            Cancel
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+
+
+            </Modal>
         </Box>
     );
 };

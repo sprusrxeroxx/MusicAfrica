@@ -40,5 +40,22 @@ export const useSongStore = create((set) => ({
 
         set(state => ({ songs: state.songs.filter(song => song._id !== pid) })); // immediately updates the ui by filtering out deleted product
         return { success: true, message: data.message };
-    }
+    },
+    updateSong: async (pid, updatedSong) => {
+        const res = await fetch(`/api/songs/${pid}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedSong),
+        });
+        const data = await res.json();
+        if (!data.success) return { success: false, message: data.message };
+        
+        // immidiately updates the state in ui if changed
+        set(state => ({ 
+            songs: state.songs.map((song) => (song._id === pid ? data.data : song)),
+        }));
+        return { success: true, message: data.message };
+    },
 }));
