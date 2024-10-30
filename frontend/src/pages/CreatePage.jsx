@@ -64,7 +64,7 @@ const CreatePage = () => {
                         />
 
                         <Input
-                            placeholder='Image URL'
+                            placeholder='Image Url'
                             name='image'
                             value={newSong.image}
                             onChange={(e) => setNewSong({ ...newSong, image: e.target.value })}

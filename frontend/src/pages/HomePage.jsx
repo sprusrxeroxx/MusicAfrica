@@ -1,8 +1,18 @@
 import { WarningIcon } from "@chakra-ui/icons/Warning";
-import { Container, VStack, Text } from "@chakra-ui/react";
+import { Container, VStack, Text, SimpleGrid } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSongStore } from "../store/song";
+import SongCard  from "../components/SongCard";
 
 const HomePage = () => {
+    const { fetchSongs, songs} = useSongStore();
+
+    useEffect(() => {
+        fetchSongs();
+    },  [fetchSongs]);
+    console.log("songs", songs);
+
     return (
         <Container maxW='container.xl' py={12}>
             <VStack spacing={8}>
@@ -15,6 +25,20 @@ const HomePage = () => {
                 >
                     Current Songs
                 </Text>
+
+                <SimpleGrid
+                    columns={{
+                        base:1,
+                        md:2,
+                        lg:3
+                    }}
+                    spacing={10}
+                    w={"full"}
+                >
+                    {songs.map((song) => (
+                        <SongCard key={song._id} song={song} />
+                    ))}
+                </SimpleGrid>
                 
                 
                 <Text fontSize='x1' textAlign={"center"} fontWeight='bold' color='gray.500'>

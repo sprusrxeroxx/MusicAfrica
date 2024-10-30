@@ -17,6 +17,11 @@ const songSchema = new mongoose.Schema({ // Schema to dictate the structure of s
             type: String,
             required: true
         },
+        image:{
+            type: String,
+            required: false
+        },
+        
         duration:{
             type: Number,
             required: false
