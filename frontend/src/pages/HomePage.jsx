@@ -1,4 +1,4 @@
-import { WarningIcon } from "@chakra-ui/icons/Warning";
+import { BsEmojiTearFill } from "react-icons/bs";
 import { Container, VStack, Text, SimpleGrid } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -42,7 +42,7 @@ const HomePage = () => {
 
                 {songs.length === 0 && (
                     <Text fontSize='x1' textAlign={"center"} fontWeight='bold' color='gray.500'>
-                        No Songs found <WarningIcon/> {" "}
+                        No Songs found <BsEmojiTearFill /> {" "}
                         <Link to={"/create"}>
                             <Text as='span' color='blue.500' _hover={{ textDecoration: "underline" }}>
                                 Add a Song
