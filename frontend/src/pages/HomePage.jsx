@@ -39,16 +39,17 @@ const HomePage = () => {
                         <SongCard key={song._id} song={song} />
                     ))}
                 </SimpleGrid>
-                
-                
-                <Text fontSize='x1' textAlign={"center"} fontWeight='bold' color='gray.500'>
-                    No Songs found <WarningIcon/> {" "}
-                    <Link to={"/create"}>
-                        <Text as='span' color='blue.500' _hover={{ textDecoration: "underline" }}>
-                            Add a Song
-                        </Text>
-                    </Link>
-                </Text>
+
+                {songs.length === 0 && (
+                    <Text fontSize='x1' textAlign={"center"} fontWeight='bold' color='gray.500'>
+                        No Songs found <WarningIcon/> {" "}
+                        <Link to={"/create"}>
+                            <Text as='span' color='blue.500' _hover={{ textDecoration: "underline" }}>
+                                Add a Song
+                            </Text>
+                        </Link>
+                    </Text>
+                )}
             </VStack>
         </Container>
     )
