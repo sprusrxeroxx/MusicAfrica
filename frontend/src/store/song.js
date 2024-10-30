@@ -28,5 +28,17 @@ export const useSongStore = create((set) => ({
         const res = await fetch("/api/songs");
         const data = await res.json();
         set({ songs: data.data });
+    },
+    deleteSong: async (pid) => {
+        const res = await  fetch(`/api/songs/${pid}`, {
+            method: "DELETE",
+        });
+
+        const data = await res.json();
+
+        if(!data.success) return { success: false, message: data.message }; // if data deletion is not successful return a false status
+
+        set(state => ({ songs: state.songs.filter(song => song._id !== pid) })); // immediately updates the ui by filtering out deleted product
+        return { success: true, message: data.message };
     }
 }));
