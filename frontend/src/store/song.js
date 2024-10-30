@@ -24,4 +24,9 @@ export const useSongStore = create((set) => ({
         set((state) => ({songs:[...state.songs, data.data]})); // Appends new song to end of list
         return { success: true, message: "Song Added successfully." };
     },
+    fetchSongs: async () => {
+        const res = await fetch("/api/songs");
+        const data = await res.json();
+        set({ songs: data.data });
+    }
 }));
