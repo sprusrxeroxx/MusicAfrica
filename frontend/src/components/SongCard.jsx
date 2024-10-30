@@ -83,12 +83,12 @@ const SongCard = ({ song }) => {
         >
             <Image src={song.image} alt={song.title} h={48} w='full' objectFit='cover' />
             <Box p={4}>
-                <Heading as='h3' size='md' mb={2}>``
-                    {song.title};
+                <Heading as='h3' size='md' mb={2}>
+                    {song.title}
                 </Heading>
 
                 <Text fontWeight='bold' fontSize='x1' color={textColor} mb={4}>
-                    {song.artist};
+                    {song.artist}
                 </Text>
 
                 <HStack spacing={2}>
