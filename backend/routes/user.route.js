@@ -9,6 +9,7 @@ const router = express.Router();
 
 // router.get("/", getUser);
 router.post("/register", FirebaseAuthController.registerUser);
+router.post("/login", FirebaseAuthController.loginUser);
 // router.put("/:id", updateUser);
 // router.delete("/:id", deleteUser);
 
