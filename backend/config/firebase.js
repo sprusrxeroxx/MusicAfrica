@@ -3,6 +3,9 @@ import admin from 'firebase-admin';
 import serviceAccount from '../FirebaseService.json' with {type: "json"};
 import dotenv from 'dotenv';
 
+dotenv.config();
+
+
 import {
     getAuth,
     createUserWithEmailAndPassword,
