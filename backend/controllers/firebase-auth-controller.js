@@ -21,49 +21,55 @@ class FirebaseAuthController {
             );
         }
         
-    createUserWithEmailAndPassword(auth, email, password).then(() => {
-       try { 
-            res.status(201).json({
-            success: true, 
-            message: "Verification email sent! User created successfully!"
-        })} catch (error) {
-                console.error("Error sending email verification", error.message);
-                res.status(500).json({ 
-                    success: false, 
-                    message: "An error occured while registering user"
-                });
-            }
-        });
-    };
-
-    loginUser(req, res) {
-        const { email, password } =req.body;
-        if (!email || !password) {
-            return (
-                res.status(422).json({ 
-                    success: false, 
-                    email: "Email is required", 
-                    password: "Password is required"
-                })
-            )}
-
-            try {signInWithEmailAndPassword(auth, email, password).then (
-                (userCredentail) => {
-                    const idToken = userCredentail._tokenResponse.idToken;
-                    if(idToken) {
-                        res.cookie('access_token', { httpOnly: true });
-                    }
-                    res.status(200).json({ 
-                        success: true, 
-                        message: "User logged in successfully", 
-                        userCredentail 
-                    })
-                })} catch (error) {
+        createUserWithEmailAndPassword(auth, email, password).then(() => {
+                res.status(201).json({
+                success: true, 
+                message: "Verification email sent! User created successfully!"
+            });
+        }).catch((error) => {
+                    console.error(error);
                     res.status(500).json({ 
                         success: false, 
-                        message: "Internal Server Error"
-                })
-            }
+                        message: "An error occured while registering user"
+                    });
+            }).catch((error) => {
+                const errorMessage= error.message;
+
+                res.status(500).json({
+                    success: false,
+                    message: errorMessage
+                });
+            })
+        };
+
+        loginUser(req, res) {
+            const { email, password } =req.body;
+            if (!email || !password) {
+                return (
+                    res.status(422).json({ 
+                        success: false, 
+                        email: "Email is required", 
+                        password: "Password is required"
+                    })
+                )}
+
+                try {signInWithEmailAndPassword(auth, email, password).then (
+                    (userCredentail) => {
+                        const idToken = userCredentail._tokenResponse.idToken;
+                        if(idToken) {
+                            res.cookie('access_token', { httpOnly: true });
+                        }
+                        res.status(200).json({ 
+                            success: true, 
+                            message: "User logged in successfully", 
+                            userCredentail 
+                        })
+                    })} catch (error) {
+                        res.status(500).json({ 
+                            success: false, 
+                            message: "Internal Server Error"
+                    })
+                }
         }
 
     // logoutUser(req, res) {
