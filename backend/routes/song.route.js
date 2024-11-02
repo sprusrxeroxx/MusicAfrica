@@ -2,7 +2,7 @@
 
 import express from "express";
 import { createSong, getSongs, updateSong, deleteSong } from "../controllers/song.controller.js";
-
+// import { verifyToken } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 router.get("/", getSongs);
