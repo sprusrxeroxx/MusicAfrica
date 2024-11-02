@@ -16,8 +16,8 @@ class FirebaseAuthController {
         if (!email || !password) {
             return (
                 res.status(422).json({ 
-                    email: "Email is required", 
-                    password: "Password is required" })
+                    email: "Email is required!", 
+                    password: "Password is required!" })
             );
         }
         
@@ -36,35 +36,35 @@ class FirebaseAuthController {
         });
     };
 
-    // loginUser(req, res) {
-    //     const { email, password } =req.body;
-    //     if (!email || !password) {
-    //         return (
-    //             res.status(422).json({ 
-    //                 success: false, 
-    //                 email: "Email is required", 
-    //                 password: "Password is required"
-    //             })
-    //         )}
+    loginUser(req, res) {
+        const { email, password } =req.body;
+        if (!email || !password) {
+            return (
+                res.status(422).json({ 
+                    success: false, 
+                    email: "Email is required", 
+                    password: "Password is required"
+                })
+            )}
 
-    //         try {signInWithEmailAndPassword(auth, email, password).then (
-    //             (userCredentail) => {
-    //                 const idToken = userCredentail._tokenResponse.idToken;
-    //                 if(idToken) {
-    //                     res.cookie('access_token', { httpOnly: true });
-    //                 }
-    //                 res.status(200).json({ 
-    //                     success: true, 
-    //                     message: "User logged in successfully", 
-    //                     userCredentail 
-    //                 })
-    //             })} catch (error) {
-    //                 res.status(500).json({ 
-    //                     success: false, 
-    //                     message: "Internal Server Error"
-    //             })
-    //         }
-    //     }
+            try {signInWithEmailAndPassword(auth, email, password).then (
+                (userCredentail) => {
+                    const idToken = userCredentail._tokenResponse.idToken;
+                    if(idToken) {
+                        res.cookie('access_token', { httpOnly: true });
+                    }
+                    res.status(200).json({ 
+                        success: true, 
+                        message: "User logged in successfully", 
+                        userCredentail 
+                    })
+                })} catch (error) {
+                    res.status(500).json({ 
+                        success: false, 
+                        message: "Internal Server Error"
+                })
+            }
+        }
 
     // logoutUser(req, res) {
     //     signOut(auth).then(() => {
