@@ -5,7 +5,7 @@ This is a web-based poetry platform with a focus on user expression , It's part 
 [Ntokozo Vilakazi] - Full-Stack Developer (React, Node, MongoDB)
 
 ## Project Description
-Poetry Hive is a web-based poetry platform that allows users to create poetic pieces, discover fellow artists, and ultimatley to find their inner voice. The platform will offer essential features like composition, collaboration, sharing with peers, and weekly events, ensuring a user-friendly interface.
+Poetry Hive is a web-based poetry platform that allows users to create poetic pieces, discover fellow artists, and ultimatly to find their inner voice. The platform will offer essential features like composition, collaboration, sharing with peers, and weekly events, ensuring a user-friendly interface.
 
 ## Learning Objectives
 Frontend Development: Deepen understanding of React.js, state management, and component-based architecture.
@@ -17,7 +17,7 @@ User Experience: Design and develop an intuitive and engaging user interface.
 Frontend: React.js, JavaScript, CSS
 Backend: Node.js, Express.js, MongoDB
 
-Third-Party Services
+## Third-Party Services
 Hosting: Heroku 
 Authentication: Firebase Authentication
 
