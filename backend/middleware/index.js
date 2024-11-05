@@ -1,6 +1,4 @@
-import admin from '../config/firebase';
-
-// import serviceAccount from 'serviceAccount.js' assert { type: 'json' };
+import admin from '../config/firebase.js';
 
 const verifyToken = async (req, res, next) => {
     const idToken = req.cookies.access_token;

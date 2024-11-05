@@ -2,10 +2,11 @@
 
 import express from "express";
 import { createSong, getSongs, updateSong, deleteSong } from "../controllers/song.controller.js";
-// import { verifyToken } from "../middleware/authMiddleware.js";
+import verifyToken from "../middleware/index.js";
+
 const router = express.Router();
 
-router.get("/", getSongs);
+router.get("/", verifyToken, getSongs);
 router.post("/", createSong);
 router.put("/:id", updateSong);
 router.delete("/:id", deleteSong);
