@@ -72,17 +72,17 @@ class FirebaseAuthController {
                 }
         }
 
-    // logoutUser(req, res) {
-    //     signOut(auth).then(() => {
-    //         res.clearCookie('access_token');
-    //         res.status(200).json({
-    //             message: "User logged out successfully"
-    //         });
-    //     }).catch((error) => {
-    //         console.error(error);
-    //         res.status(500).json({ error: "Internal Server Error" });
-    //     });
-    // }
+    logoutUser(req, res) {
+        signOut(auth).then(() => {
+            res.clearCookie('access_token');
+            res.status(200).json({
+                message: "User logged out successfully"
+            });
+        }).catch((error) => {
+            console.error(error);
+            res.status(500).json({ error: "Internal Server Error" });
+        });
+    }
 }
 
 export default new FirebaseAuthController();
