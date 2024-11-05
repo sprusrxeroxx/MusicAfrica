@@ -30,4 +30,4 @@ Schedule of Work
 
 
 ### Mock-ups
-![App Architecture](Images/PoetryHive.drawio.png)
+![App Architecture](Presentation/PoetryHive.drawio.png)
