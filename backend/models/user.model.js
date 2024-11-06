@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 // import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema({ // Schema to dictate the structure of user info to be logged
-        // username:{
-        //     type: String,
-        //     required: true,
-        //     unique: true,
-        // },
+        username:{
+            type: String,
+            required: true,
+            unique: true,
+        },
         email: {
             type: String,
             required: true,
@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({ // Schema to dictate the structure of u
         password:{
             type: String,
             required: true,
-            minlength: 6
+            select: false
         },
     },  
     {

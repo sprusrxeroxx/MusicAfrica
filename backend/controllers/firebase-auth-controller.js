@@ -9,14 +9,13 @@ import {
 
 import mongoose from 'mongoose';
 import User from '../models/user.model.js';
-import { UserRecord } from 'firebase-admin/auth';
 
- const auth = getAuth();
+const auth = getAuth();
 
 class FirebaseAuthController {
 
-    registerUser(req, res) {
-        const { email, password } = req.body;
+    async registerUser (req, res) {
+        const { email, password, username } = req.body;
         if (!email || !password) {
             return (
                 res.status(422).json({ 
@@ -26,13 +25,7 @@ class FirebaseAuthController {
         }
         
         // Create user in firebase
-        createUserWithEmailAndPassword(auth, email, password).then(() => {
-            const newUser = new User({
-                email,
-                password,
-                firebaseUid: UserRecord.uid,
-            });
-
+        const UserRecord = await createUserWithEmailAndPassword(auth, email, password).then(() => {
             res.status(201).json({
             success: true, 
             message: "Verification email sent! User created successfully!"
@@ -51,37 +44,69 @@ class FirebaseAuthController {
                     message: errorMessage
                 });
             })
-        };
 
-        loginUser(req, res) {
-            const { email, password } =req.body;
-            if (!email || !password) {
-                return (
-                    res.status(422).json({ 
+        // Create a user using MongoDb
+        const newUser = new User({
+            email,
+            password,
+            firebaseUid: UserRecord.uid,
+            username
+        });
+
+        newUser.save();
+
+        res.status(201).json({
+            message: 'User successfully added to database',
+            user: {
+                email: newUser.email,
+                username: newUser.username,
+                uid: UserRecord.uid
+            }
+        })
+    };
+
+    loginUser(req, res) {
+
+        const { email, password } =req.body;
+
+        if (!email || !password) {
+            return (
+                res.status(422).json({ 
+                    success: false, 
+                    email: "Email is required", 
+                    password: "Password is required"
+                })
+            )}
+
+            // const user = await User.findOne({ email }).select('+password');
+
+            // if (!user) {
+            //     return (
+            //         res.status(402).json({
+            //             success: false,
+            //             message: 'Invalid credentials'
+            //         })
+            //     )
+            // }
+
+            try {signInWithEmailAndPassword(auth, email, password).then (
+                (userCredentail) => {
+                    const idToken = userCredentail._tokenResponse.idToken;
+                    if(idToken) {
+                        res.cookie('access_token', { httpOnly: true });
+                    }
+                    res.status(200).json({ 
+                        success: true, 
+                        message: "User logged in successfully", 
+                        userCredentail 
+                    })
+                })} catch (error) {
+                    res.status(500).json({ 
                         success: false, 
-                        email: "Email is required", 
-                        password: "Password is required"
-                    })
-                )}
-
-                try {signInWithEmailAndPassword(auth, email, password).then (
-                    (userCredentail) => {
-                        const idToken = userCredentail._tokenResponse.idToken;
-                        if(idToken) {
-                            res.cookie('access_token', { httpOnly: true });
-                        }
-                        res.status(200).json({ 
-                            success: true, 
-                            message: "User logged in successfully", 
-                            userCredentail 
-                        })
-                    })} catch (error) {
-                        res.status(500).json({ 
-                            success: false, 
-                            message: "Internal Server Error"
-                    })
-                }
-        }
+                        message: "Internal Server Error"
+                })
+            }
+    }
 
     logoutUser(req, res) {
         signOut(auth).then(() => {
