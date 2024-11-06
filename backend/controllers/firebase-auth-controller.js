@@ -61,7 +61,7 @@ class FirebaseAuthController {
 
     loginUser(req, res) {
 
-        const { email, password } =req.body;
+        const { email, password } = req.body;
 
         if (!email || !password) {
             return (
@@ -104,13 +104,18 @@ class FirebaseAuthController {
         signOut(auth).then(() => {
             res.clearCookie('access_token');
             res.status(200).json({
-                message: "User logged out successfully"
-            });
+            message: "User logged out successfully"
+        });
+            // Redirect to login
+            res.redirect('/login');
         }).catch((error) => {
             console.error(error);
-            res.status(500).json({ error: "Internal Server Error" });
-        });
-    }
+            if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-email'){
+                res.status(401).json({ error: 'Invalid credentials' });
+            } else {
+                res.status(500).json({ error: "Internal Server Error" });
+        }
+    })};
 }
 
 export default new FirebaseAuthController();
