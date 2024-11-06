@@ -7,8 +7,9 @@ import {
     sendPasswordResetEmail
  } from '../config/firebase.js';
 
-import mongoose from 'mongoose';
+import admin from '../config/firebase.js';
 import User from '../models/user.model.js';
+
 
 const auth = getAuth();
 
@@ -24,45 +25,38 @@ class FirebaseAuthController {
             );
         }
         
-        // Create user in firebase
-        const UserRecord = await createUserWithEmailAndPassword(auth, email, password).then(() => {
-            res.status(201).json({
-            success: true, 
-            message: "Verification email sent! User created successfully!"
+        try {// Create user in firebase
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        
+            // I have to Add send email verification method later
+            
+            const firebaseUid = userCredential.user.uid;
+
+            //Create a user using MongoDb
+            let newUser = new User({
+                firebaseUid,
+                email,
+                username,
+                password
             });
-        }).catch((error) => {
-                    console.error(error);
-                    res.status(500).json({ 
-                        success: false, 
-                        message: "An error occured while registering user"
-                    });
-            }).catch((error) => {
-                const errorMessage= error.message;
-
-                res.status(500).json({
-                    success: false,
-                    message: errorMessage
-                });
+            await newUser.save();
+        
+            res.status(201).json({
+                success: true,
+                message: "User created successfully",
+                user: {
+                    email: newUser.email,
+                    username: newUser.username,
+                    uid: firebaseUid
+                }
+            });
+        } catch (error) {
+            // console.error(error);
+            res.status(500).json({
+                success: false,
+                message: "An error occured while registering user"
             })
-
-        // Create a user using MongoDb
-        const newUser = new User({
-            email,
-            password,
-            firebaseUid: UserRecord.uid,
-            username
-        });
-
-        newUser.save();
-
-        res.status(201).json({
-            message: 'User successfully added to database',
-            user: {
-                email: newUser.email,
-                username: newUser.username,
-                uid: UserRecord.uid
-            }
-        })
+        }
     };
 
     loginUser(req, res) {
@@ -89,7 +83,8 @@ class FirebaseAuthController {
             //     )
             // }
 
-            try {signInWithEmailAndPassword(auth, email, password).then (
+            try {
+                signInWithEmailAndPassword(auth, email, password).then (
                 (userCredentail) => {
                     const idToken = userCredentail._tokenResponse.idToken;
                     if(idToken) {
