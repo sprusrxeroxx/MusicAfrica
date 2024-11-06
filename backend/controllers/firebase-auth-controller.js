@@ -7,8 +7,6 @@ import {
     sendEmailVerification,
     sendPasswordResetEmail
  } from '../config/firebase.js';
-
-import admin from '../config/firebase.js';
 import User from '../models/user.model.js';
 
 
