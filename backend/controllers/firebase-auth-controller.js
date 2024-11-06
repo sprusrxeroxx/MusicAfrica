@@ -72,35 +72,32 @@ class FirebaseAuthController {
                 })
             )}
 
-            // const user = await User.findOne({ email }).select('+password');
-
-            // if (!user) {
-            //     return (
-            //         res.status(402).json({
-            //             success: false,
-            //             message: 'Invalid credentials'
-            //         })
-            //     )
-            // }
-
-            try {
                 signInWithEmailAndPassword(auth, email, password).then (
-                (userCredentail) => {
-                    const idToken = userCredentail._tokenResponse.idToken;
+                (userCredential) => {
+                    // Successful lo
+                    const idToken = userCredential._tokenResponse.idToken;
                     if(idToken) {
                         res.cookie('access_token', { httpOnly: true });
                     }
                     res.status(200).json({ 
-                        success: true, 
+                        success: true,
                         message: "User logged in successfully", 
-                        userCredentail 
+                        uid: userCredential.user.uid,
+                        email: userCredential.user.email
                     })
-                })} catch (error) {
-                    res.status(500).json({ 
-                        success: false, 
-                        message: "Internal Server Error"
-                })
-            }
+                }). catch ((error) => {
+                    if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+                        return res.status(401).json({
+                            success: false,
+                            message: 'Invalid email or password'
+                        });
+                    } else { 
+                            res.status(500).json({ 
+                            success: false, 
+                            message: "Internal Server Error"
+                        });
+                };
+            });
     }
 
     logoutUser(req, res) {
