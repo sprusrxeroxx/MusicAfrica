@@ -1,3 +1,4 @@
+import { deleteUser } from 'firebase/auth';
 import {
     getAuth,
     createUserWithEmailAndPassword,
@@ -52,12 +53,23 @@ class FirebaseAuthController {
             });
         } catch (error) {
             // console.error(error);
+
+            // Delete created user on Firebase if MongoDB creation fails
+            if (error.code === 'auth/email-already-in-use'){
+                res.status(409).json({ error: 'Email already in use' })
+            } else {
+                // Delete the created Firebase user
+                deleteUser(auth, userCredential.user.uid)
+                .catch((deleteError) => {
+                console.error('Error deleting firebase user:', deleteError);
+                });
+        }
             res.status(500).json({
                 success: false,
                 message: "An error occured while registering user"
-            })
+            });
         }
-    };
+    }
 
     loginUser(req, res) {
 
