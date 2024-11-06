@@ -7,6 +7,10 @@ import {
     sendPasswordResetEmail
  } from '../config/firebase.js';
 
+import mongoose from 'mongoose';
+import User from '../models/user.model.js';
+import { UserRecord } from 'firebase-admin/auth';
+
  const auth = getAuth();
 
 class FirebaseAuthController {
@@ -21,10 +25,17 @@ class FirebaseAuthController {
             );
         }
         
+        // Create user in firebase
         createUserWithEmailAndPassword(auth, email, password).then(() => {
-                res.status(201).json({
-                success: true, 
-                message: "Verification email sent! User created successfully!"
+            const newUser = new User({
+                email,
+                password,
+                firebaseUid: UserRecord.uid,
+            });
+
+            res.status(201).json({
+            success: true, 
+            message: "Verification email sent! User created successfully!"
             });
         }).catch((error) => {
                     console.error(error);
