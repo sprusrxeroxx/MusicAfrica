@@ -1,11 +1,11 @@
-# MusicAfrica
-This is a web-based poetry platform with a focus on user expression , It's part of my final year ALX project and acts as the capstone project concluding my back-end specialization
+# Poetry Hive
+This is a web-based poetry platform with a focus on user expression, It's part of my final year ALX project and acts as the capstone project concluding my back-end specialization
 
 ## Team Members
 [Ntokozo Vilakazi] - Full-Stack Developer (React, Node, MongoDB)
 
 ## Project Description
-Poetry Hive is a web-based poetry platform that allows users to create poetic pieces, discover fellow artists, and ultimatly to find their inner voice. The platform will offer essential features like composition, collaboration, sharing with peers, and weekly events, ensuring a user-friendly interface.
+Poetry Hive is a web-based poetry platform that allows users to create poetic pieces, discover fellow artists, and ultimately to find their inner voice. The platform will offer essential features like composition, collaboration, sharing with peers, and weekly events, ensuring a user-friendly interface.
 
 ## Learning Objectives
 Frontend Development: Deepen understanding of React.js, state management, and component-based architecture.
