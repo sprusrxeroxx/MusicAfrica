@@ -6,8 +6,8 @@ import verifyToken from "../middleware/index.js";
 
 const router = express.Router();
 
-router.get("/", verifyToken, getSongs);
-router.post("/", createSong);
+router.get("/", getSongs);
+router.post("/", verifyToken, createSong);
 router.put("/:id", updateSong);
 router.delete("/:id", deleteSong);
 
