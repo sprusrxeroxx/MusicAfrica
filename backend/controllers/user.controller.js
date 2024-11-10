@@ -16,7 +16,7 @@ import User from "../models/user.model.js";
 export const createUser = async (req, res) => {
     const user = req.body; // user will request data to http body 
 
-    if(!user.username || !user.password || !user.email || !user.starsign) {
+    if(!user.username || !user.password || !user.email || !user.firebaseUid) {
         return res.status(400).json({ success:false, message: "Please provide all fields!" });
     }
 
