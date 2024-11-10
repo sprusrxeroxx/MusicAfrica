@@ -19,15 +19,13 @@ Backend: Node.js, Express.js
 Database: MongoDB
 
 ## Third-Party Services
-Hosting: Heroku 
+Hosting: Heroku
 Authentication: Firebase Authentication
 
 ## Challenges Identified
 API Rate Limits: Ensuring efficient usage of the API requests to avoid exceeding rate limits.
 Data Security: Granting resource access rights to authorized users.
 User Interface: Creating a visually appealing and intuitive user interface.
-
-Schedule of Work
 
 
 ### Mock-ups
