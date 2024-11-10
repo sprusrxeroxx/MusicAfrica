@@ -8,39 +8,38 @@ import {
     useToast 
 } from '@chakra-ui/react';
 import { useState } from 'react';
-// import { useSongStore } from '../store/song';
+import { useUserStore } from '../store/user';
 
 const RegisterPage = () => {
     const [newUser, setNewUser] = useState({
         username:"",
         password:"",
-        image:"",
-        starsign:"",
+        firebaseUid:"",
         email:"",
-    });
+});
 
-    // const toast = useToast();
-    // const {createSong}=useSongStore();
+    const toast = useToast();
+    const {createUser}=useUserStore();
 
-    // const handleAddSong = async() => {
-    //     const {success, message} = await createSong(newSong);
-    //     if (!success) {
-    //         toast({
-    //             title:"Error",
-    //             description: message,
-    //             status: "error",
-    //             isClosable: true,
-    //         });
-    //     } else {
-    //         toast({
-    //             title:"Success",
-    //             description: message,
-    //             status: "success",
-    //             isClosable: true,
-    //         });
-    //     }
-    // setNewSong({ title:"", artist:"", image:"", audioUrl:"", lyrics:"" });
-    // };
+    const handleAddUser = async() => {
+        const {success, message} = await createUser(newUser);
+        if (!success) {
+            toast({
+                title:"Error",
+                description: message,
+                status: "error",
+                isClosable: true,
+            });
+        } else {
+            toast({
+                title:"Success",
+                description: message,
+                status: "success",
+                isClosable: true,
+            });
+        }
+    setNewUser({ title:"", username:"", password:"" });
+    };
 
     return (
         <Container maxW={"container.sm"}>
@@ -64,34 +63,22 @@ const RegisterPage = () => {
                         />
 
                         <Input
-                            placeholder='E-mail Address'
+                            placeholder='E-mail'
                             name='email'
                             value={newUser.email}
                             onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
                         />
 
                         <Input
-                            placeholder='Profile Picture'
-                            name='image'
-                            value={newUser.image}
-                            onChange={(e) => setNewUser({ ...newUser, image: e.target.value })}
-                        />
-
-                        <Input
-                            placeholder='Starsign'
-                            name='starsign'
-                            value={newUser.starsign}
-                            onChange={(e) => setNewUser({ ...newUser, starsign: e.target.value })}
-                        />
-                            <Input
-                            placeholder='Your Password'
+                            type="password"
+                            placeholder='Password'
                             name='password'
                             value={newUser.password}
                             onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
                         />
 
-                        <Button colorScheme='blue' /*onClick={handleAddSong}*/ w="full">
-                            Add User
+                        <Button colorScheme='blue' onClick={handleAddUser} w="full">
+                            Register
                         </Button>
                     </VStack>
                 </Box>
