@@ -15,11 +15,14 @@ User Experience: Design and develop an intuitive and engaging user interface.
 
 ## Technologies Used
 Frontend: React.js, JavaScript, CSS, HTML
+
 Backend: Node.js, Express.js
+
 Database: MongoDB
 
 ## Third-Party Services
 Hosting: Heroku
+
 Authentication: Firebase Authentication
 
 ## Challenges Identified
