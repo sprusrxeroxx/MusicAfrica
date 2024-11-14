@@ -64,9 +64,11 @@ class FirebaseAuthController {
         }
             res.status(500).json({
                 success: false,
-                message: "An error occured while registering user"
+                message: "An error occured while registering user",
+                redirectUrl: "api/users/login"
             });
         }
+        res.status(302).redirect('api/users/login');
     }
 
     loginUser(req, res) {
