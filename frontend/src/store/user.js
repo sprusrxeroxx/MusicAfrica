@@ -13,7 +13,7 @@ export const useUserStore = create((set) => ({
         if(!newUser.username || !newUser.email || !newUser.password) {
             return {success:false, message:"Please fill in all fields."}
         }
-        const res = await fetch("/api/users", {
+        const res = await fetch("/api/users/register", {
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
