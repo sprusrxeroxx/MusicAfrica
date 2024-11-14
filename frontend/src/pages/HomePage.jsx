@@ -23,7 +23,7 @@ const HomePage = () => {
                     bgClip={"text"}
                     textAlign={"center"}
                 >
-                    My Songs
+                    My Poems
                 </Text>
 
                 <SimpleGrid
@@ -42,10 +42,10 @@ const HomePage = () => {
 
                 {songs.length === 0 && (
                     <Text fontSize='x1' textAlign={"center"} fontWeight='bold' color='gray.500'>
-                        No Songs found <BsEmojiTearFill /> {" "}
+                        No Poem found <BsEmojiTearFill /> {" "}
                         <Link to={"/create"}>
                             <Text as='span' color='blue.500' _hover={{ textDecoration: "underline" }}>
-                                Add a Song
+                                Add a Poem
                             </Text>
                         </Link>
                     </Text>

@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useUserStore } from '../store/user';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
     const [newUser, setNewUser] = useState({
@@ -39,6 +40,7 @@ const RegisterPage = () => {
             });
         }
     setNewUser({ title:"", username:"", password:"" });
+    window.location.href = message.redirectUrl;
     };
 
     return (
