@@ -5,6 +5,7 @@
  */
 
 import {create} from 'zustand';
+import {useNavigate} from 'react-router-dom';
 
 export const useUserStore = create((set) => ({
     user: [],
@@ -21,7 +22,7 @@ export const useUserStore = create((set) => ({
             body:JSON.stringify(newUser) // stringifies newObject and takes it as argument
         });
         const data = await res.json();
-        set((state) => ({user:[...state.user, data.data]})); // Appends new User to end of list
+        set((state) => ({user:[...state.user, data.data]})); // Appends new User to end of 
         return { success: true, message: "User Added successfully." };
     },
     // fetchuser: async () => {
