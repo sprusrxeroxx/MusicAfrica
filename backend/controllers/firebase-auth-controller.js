@@ -52,11 +52,10 @@ class FirebaseAuthController {
         } catch (error) {
             // console.error(error);
 
-            // Delete created user on Firebase if MongoDB creation fails
             if (error.code === 'auth/email-already-in-use'){
                 res.status(409).json({ error: 'Email already in use' })
             } else {
-                // Delete the created Firebase user
+            // Delete created user on Firebase if MongoDB creation fails
                 deleteUser(auth, userCredential.user.uid)
                 .catch((deleteError) => {
                 console.error('Error deleting firebase user:', deleteError);
@@ -71,6 +70,7 @@ class FirebaseAuthController {
         res.status(302).redirect('api/users/login');
     }
 
+    // 
     loginUser(req, res) {
 
         const { email, password } = req.body;
