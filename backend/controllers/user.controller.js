@@ -3,15 +3,15 @@
 import mongoose from "mongoose";
 import User from "../models/user.model.js";
 
-// export const getSongs = async (req, res) => {
-//     try {
-//         const songs = await Song.find({});
-//         res.status(200).json({ success: true, data: songs });
-//     } catch (error) {
-//         console.log("Error in fetching songs:", error.message);
-//         res.status(500).json({ success: false, message: "Server Error" });
-//     }
-// };
+export const getUser = async (req, res) => {
+    try {
+        const user = await User.find({});
+        res.status(200).json({ success: true, data: user });
+    } catch (error) {
+        console.log("Errouserr in fetching songs:", error.message);
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+};
 
 export const createUser = async (req, res) => {
     const user = req.body; // user will request data to http body 
@@ -31,22 +31,22 @@ export const createUser = async (req, res) => {
     }
 };
 
-// export const updateSong = async (req, res) => {
-//     const { id } = req.params;
+export const updateUser = async (req, res) => {
+    const { id } = req.params;
 
-//     const song = req.body;
+    const user = req.body;
 
-//     if (!mongoose.Types.ObjectId.isValid(id)) {
-//         return  res.status(404).json({ success:false, message: "Song Not Found" });
-//     }
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return  res.status(404).json({ success:false, message: "User Not Found" });
+    }
 
-//     try {
-//         const updatedSong= await Song.findByIdAndUpdate(id, song, {new:true});
-//         res.status(200).json({ success:true, data: updatedSong });
-//     } catch {
-//         res.status(500).json({ success: false, message: "Server Error"});
-//     }
-// };
+    try {
+        const updatedUser= await User.findByIdAndUpdate(id, user, {new:true});
+        res.status(200).json({ success:true, data: updatedUser });
+    } catch {
+        res.status(500).json({ success: false, message: "Server Error"});
+    }
+};
 
 // export const deleteSong = async (req, res) => {
 //     const { id } = req.params;
