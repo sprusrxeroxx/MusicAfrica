@@ -22,6 +22,12 @@ const userSchema = new mongoose.Schema({ // Schema to dictate the structure of u
             required: true,
             select: false
         },
+        poems:[{
+            title: String,
+            lyrics: String,
+            tags: String,
+            timestamps: true,
+        }],
     },  
     {
         timestamps: true, // createdAt, updatedAt model logging
