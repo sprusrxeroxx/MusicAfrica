@@ -10,8 +10,9 @@ export const getAllPoems = async (req, res) => {
             {
                 username: 1, 
                 'poems.title': 1, 
-                'poems.lyrics': 1, 
-                _id: 0 
+                'poems.lyrics': 1,
+                'poems.tags': 1,
+                'poems._id': 1
             })
                 .sort({ poems: -1}
         ); // Query to fetch all users poems
@@ -30,7 +31,7 @@ export const getPoem = async (req, res) => {
             'poems.title': 1, 
             'poems.lyrics': 1, 
             'poems.tags': 1, 
-            _id: 0 
+            _id: 1
         }); // Query to fetch the poems of id match user
         res.status(200).json({ success: true, data: user });
     } catch (error) {
@@ -42,18 +43,23 @@ export const getPoem = async (req, res) => {
 export const addPoem = async (req, res) =>
     {
         const { id } = req.params;
-        const { title, lyrics, tags } = req.body.poem; // Extract poem data from the request body
+        const { title, lyrics, tags } = req.body.poems; // Extract poem data from the request body
         
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return  res.status(404).json({ success:false, message: "User Not Found" });
         }
     
-        // Updating the user's poems array
-        await User.findByIdAndUpdate(id,{
-            $push: { poems: { title, lyrics, tags } }
-        }, { new: true })
+        // Appending to the poems array
+        await User.findByIdAndUpdate(
+            id,
+            {
+                $push: { 
+                    poems: { title, lyrics, tags } 
+                }
+        }, 
+        { new: true })
             .then(user => {
-                console.log('Poem added successfully:', { title, lyrics, tags } );
+                console.log('Poem added successfully: \n', title, lyrics, tags  );
                 res.status(200).json({ success:true, data: { title, lyrics, tags } });
             })
             .catch(err => {
@@ -61,19 +67,30 @@ export const addPoem = async (req, res) =>
             });
     };
 
-export const updateUser = async (req, res) => {
-    const { id } = req.params;
-
-    const user = req.body;
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return  res.status(404).json({ success:false, message: "User Not Found" });
-    }
-
-    try {
-        const updatedUser= await User.findByIdAndUpdate(id, user, {new:true});
-        res.status(200).json({ success:true, data: updatedUser });
-    } catch {
-        res.status(500).json({ success: false, message: "Server Error"});
-    }
+export const updatePoem = async (req, res) => {
+    {
+        const { id } = req.params;
+        const { title, lyrics, tags } = req.body.poems; // Extract poem data from the request body
+        
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return  res.status(404).json({ success:false, message: "User Not Found" });
+        }
+    
+        // Updating the poems array
+        await User.updateOne(
+            { 'poems._id': id },
+            {
+                $set: { 
+                    poems: { title, lyrics, tags } // broken : fix method to take in poemId as search parameter !!
+                }
+        }, 
+        { new: true })
+            .then(user => {
+                console.log('Poem updated successfully:\n', { title, lyrics, tags });
+                res.status(200).json({ success:true, data: { title, lyrics, tags } });
+            })
+            .catch(err => {
+                console.error('Error adding poem:', err);
+            });
+    };
 };
