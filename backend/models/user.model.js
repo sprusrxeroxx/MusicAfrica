@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({ // Schema to dictate the structure of u
         poems:[{
             title: String,
             lyrics: String,
-            tags: String,
+            tags: Array,
             createdAt: Date,
             UpdatedAt: Date,
         }],
