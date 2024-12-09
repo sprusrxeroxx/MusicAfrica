@@ -48,28 +48,6 @@ export const updateUser = async (req, res) => {
     }
 };
 
-export const AddPoem = async (req, res) =>
-{
-    const { id } = req.params;
-    const { title, lyrics, tags } = req.body.poem; // Extract poem data from the request body
-    
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return  res.status(404).json({ success:false, message: "User Not Found" });
-    }
-
-    // Updating the user's poems array
-    await User.findByIdAndUpdate(id,{
-        $push: { poems: { title, lyrics, tags } }
-    }, { new: true })
-        .then(user => {
-            console.log('Poem added successfully:', { title, lyrics, tags } );
-            res.status(200).json({ success:true, data: { title, lyrics, tags } });
-        })
-        .catch(err => {
-            console.error('Error adding poem:', err);
-        });
-}
-
 // export const deleteSong = async (req, res) => {
 //     const { id } = req.params;
 
