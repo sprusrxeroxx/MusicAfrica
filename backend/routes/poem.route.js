@@ -6,10 +6,13 @@ import { addPoem, getPoem, getAllPoems } from "../controllers/poem.controller.js
 
 const router = express.Router();
 
+router
+    .route("/:id")
+    .get(getPoem)
+    .post(addPoem)
+    .put(updateUser);
+
 router.get("/", getAllPoems);
-router.get("/:id", getPoem);
-router.post("/:id", addPoem);
-router.put("/:id", updateUser);
 
 // router.delete("/:id", deletePoem);
 
