@@ -25,6 +25,23 @@ Hosting: Heroku
 
 Authentication: Firebase Authentication
 
+## API ROUTES
+
+api/users/                  HOME FOR USER
+
+### POEM ROUTES
+api/users/poems             GET                     ALL POEMS 
+api/users/:id/poems         GET|POST                ALL POEMS BY USER | CREATE A POEM
+api/users/:id/poems/:id     GET|DEL|PUT             SPECIFIC POEM
+
+### USER ROUTES
+api/users/:id               GET                     GET USER
+api/users/login             POST                    SIGN IN USER
+api/users/logout            POST                    SIGN OUT USER
+api/users/register          POST                    CREATE USER
+api/users/delete            POST                    DELETE USER
+api/users/update            PUT                     UPDATE USER
+
 ## Challenges Identified
 API Rate Limits: Ensuring efficient usage of the API requests to avoid exceeding rate limits.
 Data Security: Granting resource access rights to authorized users.
