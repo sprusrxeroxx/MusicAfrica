@@ -13,7 +13,6 @@ import cookieParser from "cookie-parser";
 // ROUTES
 import songRoutes from "./routes/song.route.js";
 import userRoutes from "./routes/user.route.js";
-import poemRoutes from "./routes/poem.route.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 5000;
@@ -25,7 +24,6 @@ app.use(cookieParser()); // MIddleware : stores session data in cookies-cache
 
 app.use("/api/songs", songRoutes); // Links song request calls to endpoints
 app.use("/api/users", userRoutes); // Links user request calls to endpoints
-app.use("/api/poems", poemRoutes); // Links poem request calls to endpoints
 
 app.listen(PORT, () => {
     connectDB();
