@@ -5,17 +5,17 @@ import User from "../models/user.model.js";
 
 export const getAllPoems = async (req, res) => {
     try {
-        const user = await User.find(
+        const user = await User.find(  // Query to fetch all users poems
             {}, 
             {
-                username: 1, 
+                username: 1,
                 'poems.title': 1, 
                 'poems.lyrics': 1,
                 'poems.tags': 1,
                 'poems._id': 1
             })
                 .sort({ poems: -1}
-        ); // Query to fetch all users poems
+        );
         res.status(200).json({ success: true, data: user });
     } catch (error) {
         console.log("Errouserr in fetching songs:", error.message);
@@ -40,7 +40,7 @@ export const getPoem = async (req, res) => {
     }
 };
 
-export const addPoem = async (req, res) =>
+export const createPoem = async (req, res) =>
     {
         const { id } = req.params;
         const { title, lyrics, tags } = req.body.poems; // Extract poem data from the request body
@@ -77,7 +77,7 @@ export const updatePoem = async (req, res) => {
         }
     
         // Updating the poems array
-        await User.updateOne(
+        await User.findByIdAndUpdate(
             { 'poems._id': id },
             {
                 $set: { 
@@ -93,4 +93,20 @@ export const updatePoem = async (req, res) => {
                 console.error('Error adding poem:', err);
             });
     };
+};
+
+export const deletePoem = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return  res.status(404).json({ success:false, message: "User Not Found" });
+    }
+
+    try {
+        await User.findByIdAndDelete({"poems._id": id});
+        res.status(200).json({ success: true, message: "User Deleted" });
+    } catch (error) {
+        console.error("Error in deleting the User:", error.message);
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
 };
