@@ -5,7 +5,11 @@ import User from "../models/user.model.js";
 
 export const getUser = async (req, res) => {
     try {
-        const user = await User.find({});
+        const user = await User.find(
+            {},
+            { poems: 0 }
+
+        );
         res.status(200).json({ success: true, data: user });
     } catch (error) {
         console.log("Errouserr in fetching songs:", error.message);
