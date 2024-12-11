@@ -50,3 +50,9 @@ User Interface: Creating a visually appealing and intuitive user interface.
 
 ### Mock-ups
 ![App Architecture](Presentation/PoetryHive.drawio.png)
+
+### FUTURE UPDATES
+- WRITING CLUBS 
+- WEEKLY COMPETITIONS
+- AI POWERED TEXT ANALYSIS FOR AUTO TAG GENERATION
+- MACHINE LEARNING TWIN/DOUBLEGANGER WRITING MODE
