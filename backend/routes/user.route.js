@@ -25,7 +25,7 @@ router
     .post(createPoem);
 
 router
-    .route("/:uid/poems/:pid")
+    .route("/poems/:pid")
     .delete(deletePoem)
     .put(updatePoem);
 
